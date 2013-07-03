@@ -1,0 +1,1 @@
+This repo contains the files referenced in the [Creating Endpoints Tutorial](http://guides.spreecommerce.com/integration/creating_endpoints_tutorial.html)

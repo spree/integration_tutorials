@@ -1,0 +1,10 @@
+{
+  "message": "product:new",
+  "message_id": "518726r84910000001",
+  "payload": {
+    "product": {
+      "id": "92674",
+      "name": "Really Awesome Widgets"
+    }
+  }
+}

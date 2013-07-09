@@ -10,9 +10,9 @@ class HelloEndpoint < EndpointBase
     get_product_names
 
     if @product_names.include?(@message[:payload]['product']['name'])
-      process_result 200, { 'message_id' => @message[:message_id], 'message' => 'product:in_stock' }
+      process_result 200, { 'message_id' => @message[:message_id], 'message' => 'notification:info' }
     else
-      process_result 200, { 'message_id' => @message[:message_id], 'message' => 'product:not_in_stock' }
+      process_result 200, { 'message_id' => @message[:message_id], 'message' => 'notification:warn' }
     end
   end
 

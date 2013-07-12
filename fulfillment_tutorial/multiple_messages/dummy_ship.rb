@@ -1,8 +1,7 @@
 module DummyShip
   def self.ship_package(address, order)
     validate_address(address)
-    shipment = Shipment.new(order)
-    shipment
+    Shipment.new(order)
   end
 
   def self.validate_address(address)

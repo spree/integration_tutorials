@@ -9,8 +9,6 @@ class Shipment
   end
 
   def generate_shipment_number
-    record = true
-    random = "S#{Array.new(6){rand(6)}.join}"
-    random
+    "S#{Array.new(6){rand(6)}.join}"
   end
 end

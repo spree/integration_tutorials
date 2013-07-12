@@ -15,7 +15,7 @@ class FulfillmentEndpoint < EndpointBase
         "payload" => { "result" => "The address is valid, and the shipment will be sent." } }
     rescue Exception => e
       process_result 200, { 'message_id' => @message[:message_id], 'message' => "notification:error",
-        "payload" => { "result" => "There was a problem with this address." } }
+        "payload" => { "result" => e.message } }
     end
   end
 end

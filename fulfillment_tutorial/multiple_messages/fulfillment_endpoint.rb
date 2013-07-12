@@ -5,6 +5,7 @@ class FulfillmentEndpoint < EndpointBase
   post '/drop_ship' do
     get_address
     @order = @message[:payload]['order']
+
     begin
       result = DummyShip.ship_package(@address, @order)
       process_result 200, [ { 'message_id' => @message[:message_id], 'message' => "notification:info",
@@ -13,7 +14,7 @@ class FulfillmentEndpoint < EndpointBase
         "payload" => { "tracking_number" => result.tracking_number, "ship_date" => result.ship_date } } ]
     rescue Exception => e
       process_result 200, { 'message_id' => @message[:message_id], 'message' => "notification:error",
-        "payload" => { "result" => "There was a problem with this address." } }
+        "payload" => { "result" => e.message } }
     end
   end
 
@@ -26,7 +27,7 @@ class FulfillmentEndpoint < EndpointBase
         "payload" => { "result" => "The address is valid, and the shipment will be sent." } }
     rescue Exception => e
       process_result 200, { 'message_id' => @message[:message_id], 'message' => "notification:error",
-        "payload" => { "result" => "There was a problem with this address." } }
+        "payload" => { "result" => e.message } }
     end
   end
 

@@ -1,5 +1,4 @@
 require 'endpoint_base'
-require 'multi_json'
 
 class FulfillmentEndpoint < EndpointBase
   post '/drop_ship' do

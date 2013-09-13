@@ -7,13 +7,28 @@ class FulfillmentEndpoint < EndpointBase
 
     begin
       result = DummyShip.ship_package(@address, @order)
-      process_result 200, [ { 'message_id' => @message[:message_id], 'message' => "notification:info",
-        "payload" => { "result" => "The address is valid, and the shipment will be sent." } },
-        { 'message_id' => @message[:message_id], 'message' => "shipment:confirm",
-        "payload" => { "tracking_number" => result.tracking_number, "ship_date" => result.ship_date } } ]
+      process_result 200, { 'message_id' => @message[:message_id], 
+                            'notifications' => [
+                              { 'level' => "info",
+                                'subject' => "",
+                                'description' => "The address is valid, and the shipment will be sent." }
+                            ],
+                            'messages' => [
+                              { 'message' => "shipment:confirm",
+                                'payload' => {
+                                  "tracking_number" => result.tracking_number,
+                                  "ship_date" => result.ship_date }
+                              }
+                            ]
+                          }
     rescue Exception => e
-      process_result 200, { 'message_id' => @message[:message_id], 'message' => "notification:error",
-        "payload" => { "result" => e.message } }
+      process_result 200, { 'message_id' => @message[:message_id],
+                            'notifications' => [
+                              { 'level' => "error",
+                                'subject' => 'address is invalid',
+                                'description' => e.message } 
+                            ]
+                          }
     end
   end
 
@@ -22,11 +37,22 @@ class FulfillmentEndpoint < EndpointBase
 
     begin
       result = DummyShip.validate_address(@address)
-      process_result 200, { 'message_id' => @message[:message_id], 'message' => "notification:info",
-        "payload" => { "result" => "The address is valid, and the shipment will be sent." } }
+      process_result 200, { 'message_id' => @message[:message_id],
+                            'notifications' => [
+                              { 'level' => "info",
+                                'subject' => "",
+                                'description' => "The address is valid, and the shipment will be sent." }
+                            ]
+                          }
+
     rescue Exception => e
-      process_result 200, { 'message_id' => @message[:message_id], 'message' => "notification:error",
-        "payload" => { "result" => e.message } }
+      process_result 200, { 'message_id' => @message[:message_id],
+                            'notifications' => [
+                              { 'level' => "error",
+                                'subject' => 'address is invalid',
+                                'description' => e.message }
+                            ]
+                          }
     end
   end
 

@@ -10,11 +10,22 @@ class FulfillmentEndpoint < EndpointBase
 
     begin
       result = DummyShip.validate_address(address)
-      process_result 200, { 'message_id' => @message[:message_id], 'message' => "notification:info",
-        "payload" => { "result" => "The address is valid, and the shipment will be sent." } }
+      process_result 200, { 'message_id' => @message[:message_id], 
+                            'notifications' => [
+                              { 'level' => "info",
+                                'subject' => "",
+                                'description' => "The address is valid, and the shipment will be sent." }
+                            ]
+                          }
+
     rescue Exception => e
-      process_result 200, { 'message_id' => @message[:message_id], 'message' => "notification:error",
-        "payload" => { "result" => e.message } }
+      process_result 200, { 'message_id' => @message[:message_id],
+                            'notifications' => [
+                              { 'level' => "error",
+                                'subject' => 'address is invalid',
+                                'description' => e.message }
+                            ]
+                          }
     end
   end
 end

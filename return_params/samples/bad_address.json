@@ -1,0 +1,20 @@
+{
+  "message": "order:new",
+  "message_id": "518726r85010000001",
+  "payload": {
+    "order": {
+      "shipping_address": {
+        "firstname": "Sally",
+        "lastname": "Albright",
+        "address1": "55 Rye Lane",
+        "address2": "",
+        "city": "Greensboro",
+        "zipcode": "27235",
+        "phone": "555-555-1212",
+        "company": "Subs and Sandwiches",
+        "country": "US",
+        "state": "North Carolina"
+      }
+    }
+  }
+}
